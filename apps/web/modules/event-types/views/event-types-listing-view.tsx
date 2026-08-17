@@ -202,9 +202,11 @@ const Item = ({
         </small>
       ) : null}
       {!isManagedEventType && type.hidden && (
-        <Badge variant="gray" className="ml-2 sm:hidden" data-testid="hidden-badge">
-          {t("hidden")}
-        </Badge>
+        <Tooltip content={t("hidden_event_type_tooltip")}>
+          <Badge variant="gray" className="ml-2 sm:hidden" data-testid="hidden-badge">
+            {t("hidden")}
+          </Badge>
+        </Tooltip>
       )}
       {readOnly && (
         <Badge variant="gray" className="ml-2" data-testid="readonly-badge">
@@ -248,9 +250,11 @@ const Item = ({
                 </small>
               ) : null}
               {!isManagedEventType && type.hidden && (
-                <Badge variant="gray" className="ml-2 sm:hidden" data-testid="hidden-badge">
-                  {t("hidden")}
-                </Badge>
+                <Tooltip content={t("hidden_event_type_tooltip")}>
+                  <Badge variant="gray" className="ml-2 sm:hidden" data-testid="hidden-badge">
+                    {t("hidden")}
+                  </Badge>
+                </Tooltip>
               )}
               {readOnly && (
                 <Badge variant="gray" className="ml-2" data-testid="readonly-badge">
@@ -603,9 +607,11 @@ export const InfiniteEventTypeList = ({
                           {!isManagedEventType && (
                             <>
                               {type.hidden && (
-                                <Badge variant="gray" data-testid="hidden-badge">
-                                  {t("hidden")}
-                                </Badge>
+                                <Tooltip content={t("hidden_event_type_tooltip")}>
+                                  <Badge variant="gray" data-testid="hidden-badge">
+                                    {t("hidden")}
+                                  </Badge>
+                                </Tooltip>
                               )}
                               <Tooltip
                                 content={

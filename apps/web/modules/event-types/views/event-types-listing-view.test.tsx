@@ -30,6 +30,14 @@ vi.mock("@calcom/lib/hooks/useCopy", () => ({
   useCopy: () => ({ copyToClipboard: vi.fn(), isCopied: false }),
 }));
 
+vi.mock("@calcom/ui/components/tooltip", () => ({
+  Tooltip: ({ children, content }: { children: React.ReactNode; content: React.ReactNode }) => (
+    <div data-testid="tooltip-wrapper" data-tooltip-content={content}>
+      {children}
+    </div>
+  ),
+}));
+
 vi.mock("@calcom/web/modules/event-types/components", () => ({
   EventTypeDescription: () => null,
 }));
@@ -147,5 +155,17 @@ describe("InfiniteEventTypeList hidden indicator", () => {
     renderList({ hidden: true, schedulingType: SchedulingType.MANAGED });
 
     expect(screen.queryByTestId("hidden-badge")).not.toBeInTheDocument();
+  });
+
+  it("wraps every hidden badge in a Tooltip explaining the hidden state", () => {
+    renderList({ hidden: true, schedulingType: null });
+
+    const hiddenBadges = screen.getAllByTestId("hidden-badge");
+    expect(hiddenBadges.length).toBeGreaterThan(0);
+    for (const badge of hiddenBadges) {
+      const tooltipWrapper = badge.closest('[data-testid="tooltip-wrapper"]');
+      expect(tooltipWrapper).not.toBeNull();
+      expect(tooltipWrapper).toHaveAttribute("data-tooltip-content", "hidden_event_type_tooltip");
+    }
   });
 });
