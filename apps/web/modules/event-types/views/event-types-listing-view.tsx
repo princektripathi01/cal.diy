@@ -202,7 +202,9 @@ const Item = ({
         </small>
       ) : null}
       {!isManagedEventType && type.hidden && (
-        <span className="ml-2 text-gray-400 text-sm sm:hidden">{t("hidden")}</span>
+        <Badge variant="gray" className="ml-2 sm:hidden" data-testid="hidden-badge">
+          {t("hidden")}
+        </Badge>
       )}
       {readOnly && (
         <Badge variant="gray" className="ml-2" data-testid="readonly-badge">
@@ -246,7 +248,9 @@ const Item = ({
                 </small>
               ) : null}
               {!isManagedEventType && type.hidden && (
-                <span className="ml-2 text-gray-400 text-sm sm:hidden">{t("hidden")}</span>
+                <Badge variant="gray" className="ml-2 sm:hidden" data-testid="hidden-badge">
+                  {t("hidden")}
+                </Badge>
               )}
               {readOnly && (
                 <Badge variant="gray" className="ml-2" data-testid="readonly-badge">
@@ -596,7 +600,11 @@ export const InfiniteEventTypeList = ({
                         <div className="flex items-center justify-between space-x-2 rtl:space-x-reverse">
                           {!isManagedEventType && (
                             <>
-                              {type.hidden && <span className="text-gray-400 text-sm">{t("hidden")}</span>}
+                              {type.hidden && (
+                                <Badge variant="gray" data-testid="hidden-badge">
+                                  {t("hidden")}
+                                </Badge>
+                              )}
                               <Tooltip
                                 content={
                                   type.hidden ? t("show_eventtype_on_profile") : t("hide_from_profile")
@@ -930,9 +938,7 @@ const CTA = ({ profileOptions }: { profileOptions: ProfileOption[] }) => {
         }}
         placeholder={t("search")}
       />
-      <Button
-        data-testid="new-event-type"
-        href={`?dialog=new&eventPage=${profileOptions[0]?.slug ?? ""}`}>
+      <Button data-testid="new-event-type" href={`?dialog=new&eventPage=${profileOptions[0]?.slug ?? ""}`}>
         {t("new")}
       </Button>
       <CreateEventTypeDialog profileOptions={profileOptions} />
