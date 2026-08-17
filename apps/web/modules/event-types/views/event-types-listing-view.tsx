@@ -202,7 +202,11 @@ const Item = ({
         </small>
       ) : null}
       {!isManagedEventType && type.hidden && (
-        <span className="ml-2 text-gray-400 text-sm sm:hidden">{t("hidden")}</span>
+        <Tooltip content={t("hidden_event_type_tooltip")}>
+          <Badge variant="gray" className="ml-2 sm:hidden" data-testid="hidden-badge">
+            {t("hidden")}
+          </Badge>
+        </Tooltip>
       )}
       {readOnly && (
         <Badge variant="gray" className="ml-2" data-testid="readonly-badge">
@@ -246,7 +250,11 @@ const Item = ({
                 </small>
               ) : null}
               {!isManagedEventType && type.hidden && (
-                <span className="ml-2 text-gray-400 text-sm sm:hidden">{t("hidden")}</span>
+                <Tooltip content={t("hidden_event_type_tooltip")}>
+                  <Badge variant="gray" className="ml-2 sm:hidden" data-testid="hidden-badge">
+                    {t("hidden")}
+                  </Badge>
+                </Tooltip>
               )}
               {readOnly && (
                 <Badge variant="gray" className="ml-2" data-testid="readonly-badge">
@@ -563,6 +571,7 @@ export const InfiniteEventTypeList = ({
                       <ArrowButton
                         onClick={() => moveEventType(LIMIT * pageIdx + index, -1)}
                         arrowDirection="up"
+                        label={t("move_up")}
                       />
                     )}
 
@@ -570,6 +579,7 @@ export const InfiniteEventTypeList = ({
                       <ArrowButton
                         onClick={() => moveEventType(LIMIT * pageIdx + index, 1)}
                         arrowDirection="down"
+                        label={t("move_down")}
                       />
                     )}
                     <MemoizedItem type={type} group={group} readOnly={readOnly} />
@@ -596,7 +606,13 @@ export const InfiniteEventTypeList = ({
                         <div className="flex items-center justify-between space-x-2 rtl:space-x-reverse">
                           {!isManagedEventType && (
                             <>
-                              {type.hidden && <span className="text-gray-400 text-sm">{t("hidden")}</span>}
+                              {type.hidden && (
+                                <Tooltip content={t("hidden_event_type_tooltip")}>
+                                  <Badge variant="gray" data-testid="hidden-badge">
+                                    {t("hidden")}
+                                  </Badge>
+                                </Tooltip>
+                              )}
                               <Tooltip
                                 content={
                                   type.hidden ? t("show_eventtype_on_profile") : t("hide_from_profile")
@@ -930,9 +946,7 @@ const CTA = ({ profileOptions }: { profileOptions: ProfileOption[] }) => {
         }}
         placeholder={t("search")}
       />
-      <Button
-        data-testid="new-event-type"
-        href={`?dialog=new&eventPage=${profileOptions[0]?.slug ?? ""}`}>
+      <Button data-testid="new-event-type" href={`?dialog=new&eventPage=${profileOptions[0]?.slug ?? ""}`}>
         {t("new")}
       </Button>
       <CreateEventTypeDialog profileOptions={profileOptions} />
