@@ -567,6 +567,7 @@ export const InfiniteEventTypeList = ({
                       <ArrowButton
                         onClick={() => moveEventType(LIMIT * pageIdx + index, -1)}
                         arrowDirection="up"
+                        label={t("move_up")}
                       />
                     )}
 
@@ -574,6 +575,7 @@ export const InfiniteEventTypeList = ({
                       <ArrowButton
                         onClick={() => moveEventType(LIMIT * pageIdx + index, 1)}
                         arrowDirection="down"
+                        label={t("move_down")}
                       />
                     )}
                     <MemoizedItem type={type} group={group} readOnly={readOnly} />
