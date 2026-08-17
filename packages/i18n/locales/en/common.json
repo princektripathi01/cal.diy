@@ -1028,7 +1028,6 @@
   "unlocked_fields_member_description": "Unlocked by team admin",
   "url": "URL",
   "hidden": "Hidden",
-  "hidden_event_type_tooltip": "This event type is hidden from your public profile",
   "readonly": "Read only",
   "assigned": "Assigned",
   "you_are_assigned_to_this_event": "You are assigned to this event",
@@ -4772,7 +4771,5 @@
   "user_updated_successfully": "User updated successfully.",
   "error_updating_user": "There was an error updating this user.",
   "please_reschedule": "Please reschedule.",
-  "move_up": "Move up",
-  "move_down": "Move down",
   "ADD_NEW_STRINGS_ABOVE_THIS_LINE_TO_PREVENT_MERGE_CONFLICTS": "↑↑↑↑↑↑↑↑↑↑↑↑↑ Add your new strings above here ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑"
 }
