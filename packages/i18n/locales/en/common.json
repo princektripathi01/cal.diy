@@ -1028,6 +1028,7 @@
   "unlocked_fields_member_description": "Unlocked by team admin",
   "url": "URL",
   "hidden": "Hidden",
+  "hidden_event_type_tooltip": "This event type is hidden from your public profile",
   "readonly": "Read only",
   "assigned": "Assigned",
   "you_are_assigned_to_this_event": "You are assigned to this event",
