@@ -6,6 +6,7 @@
 // formState.errors via react-hook-form's setError the same way zod-driven validation
 // errors populate it in the real form.
 
+import { Alert } from "@calcom/ui/components/alert";
 import { Field, FieldLabel } from "@coss/ui/components/field";
 import { Input } from "@coss/ui/components/input";
 import { InputGroup, InputGroupInput } from "@coss/ui/components/input-group";
@@ -84,6 +85,37 @@ function getPasswordInput(container: HTMLElement) {
   if (!input) throw new Error("password input not found");
   return input;
 }
+
+// Mirrors the error Alert block from login-view.tsx: the errorMessage Alert render is
+// wrapped in a role="alert" region so assistive technology announces it as soon as it
+// appears in the DOM (WAI-ARIA live region semantics for role="alert").
+function LoginErrorAlert({ errorMessage }: { errorMessage: string | null }) {
+  return (
+    <div role="alert" data-testid="login-error">
+      {errorMessage && <Alert severity="error" title={errorMessage} className="mt-4" />}
+    </div>
+  );
+}
+
+describe("Login credentials error accessibility wiring", () => {
+  it("renders the incorrect-credentials error inside a role=alert, data-testid=login-error region", async () => {
+    // Mirrors ErrorCode.IncorrectEmailPassword's localized message, produced when
+    // signIn("credentials") rejects a wrong password for a seeded user like pro@example.com.
+    render(<LoginErrorAlert errorMessage="Email or password is incorrect." />);
+
+    const region = await screen.findByTestId("login-error");
+    expect(region).toHaveAttribute("role", "alert");
+    expect(region).toHaveTextContent("Email or password is incorrect.");
+  });
+
+  it("keeps the role=alert region present but empty when there is no error", () => {
+    render(<LoginErrorAlert errorMessage={null} />);
+
+    const region = screen.getByTestId("login-error");
+    expect(region).toHaveAttribute("role", "alert");
+    expect(region).toBeEmptyDOMElement();
+  });
+});
 
 describe("Login field error accessibility wiring", () => {
   it("gives the email error paragraph id=email-error while keeping data-testid=field-error", async () => {

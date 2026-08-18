@@ -316,7 +316,9 @@ export default function Login({
               )}
 
               {/* Error Message */}
-              {errorMessage && <Alert severity="error" title={errorMessage} className="mt-4" />}
+              <div role="alert" data-testid="login-error">
+                {errorMessage && <Alert severity="error" title={errorMessage} className="mt-4" />}
+              </div>
 
               {/* Submit Button */}
               <Button
