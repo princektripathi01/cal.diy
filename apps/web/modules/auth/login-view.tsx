@@ -254,10 +254,15 @@ export default function Login({
                       type="email"
                       defaultValue={totpEmail || (searchParams?.get("email") as string)}
                       autoComplete="email"
+                      aria-invalid={formState.errors.email ? true : undefined}
+                      aria-describedby={formState.errors.email ? "email-error" : undefined}
                       {...register("email")}
                     />
                     {formState.errors.email && (
-                      <p data-testid="field-error" className="text-destructive-foreground text-xs">
+                      <p
+                        id="email-error"
+                        data-testid="field-error"
+                        className="text-destructive-foreground text-xs">
                         {formState.errors.email.message}
                       </p>
                     )}
@@ -276,6 +281,8 @@ export default function Login({
                         id="password"
                         type={showPassword ? "text" : "password"}
                         autoComplete="current-password"
+                        aria-invalid={formState.errors.password ? true : undefined}
+                        aria-describedby={formState.errors.password ? "password-error" : undefined}
                         {...register("password")}
                       />
                       <InputGroupAddon align="inline-end">
@@ -290,7 +297,10 @@ export default function Login({
                       </InputGroupAddon>
                     </InputGroup>
                     {formState.errors.password && (
-                      <p data-testid="field-error" className="text-destructive-foreground text-xs">
+                      <p
+                        id="password-error"
+                        data-testid="field-error"
+                        className="text-destructive-foreground text-xs">
                         {formState.errors.password.message}
                       </p>
                     )}
