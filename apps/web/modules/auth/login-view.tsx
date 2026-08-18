@@ -272,7 +272,10 @@ export default function Login({
                   <Field>
                     <div className="flex w-full items-center justify-between">
                       <FieldLabel>{t("password")}</FieldLabel>
-                      <Link href="/auth/forgot-password" className="text-sm text-subtle hover:text-emphasis">
+                      <Link
+                        href="/auth/forgot-password"
+                        className="text-sm text-subtle hover:text-emphasis"
+                        aria-label={t("forgot_password")}>
                         {t("forgot")}
                       </Link>
                     </div>
@@ -325,7 +328,8 @@ export default function Login({
                 type="submit"
                 variant="outline"
                 className="mt-8 w-full"
-                disabled={formState.isSubmitting}>
+                disabled={formState.isSubmitting}
+                data-testid="login-submit">
                 {twoFactorRequired ? t("submit") : t("continue")}
               </Button>
             </form>

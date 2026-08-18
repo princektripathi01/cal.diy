@@ -7,10 +7,12 @@
 // errors populate it in the real form.
 
 import { Alert } from "@calcom/ui/components/alert";
+import { Button } from "@coss/ui/components/button";
 import { Field, FieldLabel } from "@coss/ui/components/field";
 import { Input } from "@coss/ui/components/input";
 import { InputGroup, InputGroupInput } from "@coss/ui/components/input-group";
 import { render, screen } from "@testing-library/react";
+import Link from "next/link";
 import { useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { describe, expect, it } from "vitest";
@@ -97,6 +99,28 @@ function LoginErrorAlert({ errorMessage }: { errorMessage: string | null }) {
   );
 }
 
+// Mirrors the submit Button block from login-view.tsx (the "Continue"/"Submit" button
+// closing the credentials form).
+function LoginSubmitButton({ twoFactorRequired }: { twoFactorRequired: boolean }) {
+  return (
+    <Button type="submit" variant="outline" className="mt-8 w-full" data-testid="login-submit">
+      {twoFactorRequired ? "Submit" : "Continue"}
+    </Button>
+  );
+}
+
+// Mirrors the forgot-password Link next to the password FieldLabel in login-view.tsx.
+function ForgotPasswordLink() {
+  return (
+    <Link
+      href="/auth/forgot-password"
+      className="text-sm text-subtle hover:text-emphasis"
+      aria-label="Forgot password?">
+      Forgot?
+    </Link>
+  );
+}
+
 describe("Login credentials error accessibility wiring", () => {
   it("renders the incorrect-credentials error inside a role=alert, data-testid=login-error region", async () => {
     // Mirrors ErrorCode.IncorrectEmailPassword's localized message, produced when
@@ -166,5 +190,23 @@ describe("Login field error accessibility wiring", () => {
     const passwordInput = getPasswordInput(container);
     expect(passwordInput.hasAttribute("aria-invalid")).toBe(false);
     expect(passwordInput.hasAttribute("aria-describedby")).toBe(false);
+  });
+});
+
+describe("Login submit button test id", () => {
+  it("exposes data-testid=login-submit on the submit button", () => {
+    render(<LoginSubmitButton twoFactorRequired={false} />);
+
+    const submit = screen.getByTestId("login-submit");
+    expect(submit).toHaveAttribute("type", "submit");
+  });
+});
+
+describe("Forgot-password link accessible name", () => {
+  it("keeps the visible text 'Forgot?' while exposing 'Forgot password?' as the accessible name", () => {
+    render(<ForgotPasswordLink />);
+
+    const link = screen.getByRole("link", { name: "Forgot password?" });
+    expect(link).toHaveTextContent("Forgot?");
   });
 });
