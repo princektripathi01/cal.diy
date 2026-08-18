@@ -254,10 +254,15 @@ export default function Login({
                       type="email"
                       defaultValue={totpEmail || (searchParams?.get("email") as string)}
                       autoComplete="email"
+                      aria-invalid={formState.errors.email ? true : undefined}
+                      aria-describedby={formState.errors.email ? "email-error" : undefined}
                       {...register("email")}
                     />
                     {formState.errors.email && (
-                      <p data-testid="field-error" className="text-destructive-foreground text-xs">
+                      <p
+                        id="email-error"
+                        data-testid="field-error"
+                        className="text-destructive-foreground text-xs">
                         {formState.errors.email.message}
                       </p>
                     )}
@@ -267,7 +272,10 @@ export default function Login({
                   <Field>
                     <div className="flex w-full items-center justify-between">
                       <FieldLabel>{t("password")}</FieldLabel>
-                      <Link href="/auth/forgot-password" className="text-sm text-subtle hover:text-emphasis">
+                      <Link
+                        href="/auth/forgot-password"
+                        className="text-sm text-subtle hover:text-emphasis"
+                        aria-label={t("forgot_password")}>
                         {t("forgot")}
                       </Link>
                     </div>
@@ -276,6 +284,8 @@ export default function Login({
                         id="password"
                         type={showPassword ? "text" : "password"}
                         autoComplete="current-password"
+                        aria-invalid={formState.errors.password ? true : undefined}
+                        aria-describedby={formState.errors.password ? "password-error" : undefined}
                         {...register("password")}
                       />
                       <InputGroupAddon align="inline-end">
@@ -290,7 +300,10 @@ export default function Login({
                       </InputGroupAddon>
                     </InputGroup>
                     {formState.errors.password && (
-                      <p data-testid="field-error" className="text-destructive-foreground text-xs">
+                      <p
+                        id="password-error"
+                        data-testid="field-error"
+                        className="text-destructive-foreground text-xs">
                         {formState.errors.password.message}
                       </p>
                     )}
@@ -306,14 +319,17 @@ export default function Login({
               )}
 
               {/* Error Message */}
-              {errorMessage && <Alert severity="error" title={errorMessage} className="mt-4" />}
+              <div role="alert" data-testid="login-error">
+                {errorMessage && <Alert severity="error" title={errorMessage} className="mt-4" />}
+              </div>
 
               {/* Submit Button */}
               <Button
                 type="submit"
                 variant="outline"
                 className="mt-8 w-full"
-                disabled={formState.isSubmitting}>
+                disabled={formState.isSubmitting}
+                data-testid="login-submit">
                 {twoFactorRequired ? t("submit") : t("continue")}
               </Button>
             </form>
