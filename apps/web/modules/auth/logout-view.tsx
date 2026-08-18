@@ -43,15 +43,19 @@ export function Logout(props: PageProps) {
   return (
     <AuthContainer showLogo>
       <div className="mb-4">
-        <div className="bg-cal-success mx-auto flex h-12 w-12 items-center justify-center rounded-full">
+        <div
+          aria-hidden="true"
+          className="bg-cal-success mx-auto flex h-12 w-12 items-center justify-center rounded-full">
           <CheckIcon className="h-6 w-6 text-green-600" />
         </div>
-        <div className="mt-3 text-center sm:mt-5">
+        <div className="mt-3 text-center sm:mt-5" role="status">
           <h3 className="text-emphasis text-lg font-medium leading-6" id="modal-title">
             {t("youve_been_logged_out")}
           </h3>
           <div className="mt-2">
-            <p className="text-subtle text-sm">{t(message())}</p>
+            <p className="text-subtle text-sm" data-testid="logout-message">
+              {t(message())}
+            </p>
           </div>
         </div>
       </div>
