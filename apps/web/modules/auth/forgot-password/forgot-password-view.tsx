@@ -88,7 +88,11 @@ export default function ForgotPassword(props: PageProps) {
       <div className="stack-y-6 text-sm leading-normal ">
         <p className="">{t("password_reset_email", { email })}</p>
         <p className="">{t("password_reset_leading")}</p>
-        {error && <p className="text-center text-red-600">{error.message}</p>}
+        {error && (
+          <p role="alert" data-testid="forgot-password-error" className="text-center text-red-600">
+            {error.message}
+          </p>
+        )}
         <Button color="secondary" className="w-full justify-center" href="/auth/login">
           {t("back_to_signin")}
         </Button>
@@ -112,7 +116,13 @@ export default function ForgotPassword(props: PageProps) {
       {success && <Success />}
       {!success && (
         <>
-          <div className="stack-y-6">{error && <p className="text-red-600">{error.message}</p>}</div>
+          <div className="stack-y-6">
+            {error && (
+              <p role="alert" data-testid="forgot-password-error" className="text-red-600">
+                {error.message}
+              </p>
+            )}
+          </div>
           <form
             className="stack-y-6"
             onSubmit={handleSubmit}
@@ -141,6 +151,7 @@ export default function ForgotPassword(props: PageProps) {
                 color="secondary"
                 disabled={loading}
                 aria-label={t("request_password_reset")}
+                data-testid="forgot-password-submit"
                 loading={loading}>
                 {t("request_password_reset")}
               </Button>
